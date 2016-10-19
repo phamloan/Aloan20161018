@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- References a Handlebars partial in views/partials/head.handlebars -->
+  {{>head}}
+  {{{_sections.shead}}}
+  <title>{{title}}</title>
+</head>
+<body id="dn-simple-main">
+  <!-- The HTML for each view goes here -->
+  	{{{body}}}
+</body>
+</html>

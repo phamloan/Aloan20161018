@@ -1,0 +1,69 @@
+{{#section 'shead'}}
+<!-- stuff that goes in head... -->
+  	<link type="text/css" rel="stylesheet" href="/stylesheets/login.css">
+  	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+  	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+ 	<script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+	<script src="/javascripts/jquery.validate.js"></script>
+	<script src="/javascripts/additional-methods.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  	<script type="text/javascript" charset="utf-8" src="/javascripts/validate_login.js"></script>
+{{/section}}
+
+<div id="dn-header" style="background:#0157AD url(/images/com/dn-header_back.jpg) 0 100% repeat-x;">
+	<li id="dn-h-logo" style="color: white !important; font-size: 28px !important; padding-top: 5px !important;">給与明細システム</li>
+</div><!-- #dn-header -->
+<div id="dn-body">
+	<div id="dn-main-wrap">
+		<div id="dn-main">
+			<div id="login-body-back">
+				<div id="login-body">
+					<div id="login-box" class="center middle" style="box-shadow: 0 2px 4px 0 rgba(0,0,0,0.3); background-color: #fff; border-radius: 10px;">
+						<div id="login-input" class="loginInput">
+							<form action="/login" method="post" name="inputfrm" id="inputfrm">
+								{{#if message}}
+									<div class="alert alert-danger removeError" style="height: 40px !important;">{{message}}</div>
+								{{else}}
+									<div class="noMessagePadding"></div>
+								{{/if}}
+								<!--login_group_s-->
+								<div class="control-group">
+									<label for="empcode" class="control-label">社員番号</label><br/>
+									<div class="controls">
+										<input class="co-width-100p" name="empcode" id="empcode" type="text"><br/>
+									</div>
+								</div>
+								<!--login_group_e-->
+								<div class="control-group" style="padding-top: 5px;">
+						          	<label for="password" class="control-label">パスワード</label><br/>
+						          	<div class="controls">
+						          		<input class="co-width-100p" type="password" name="password" id="password"><br/>
+						          	</div>
+						        </div>
+						        <div class="form-actions">
+						        	<br>
+						          	<input type="submit" id="login-btn" style="background:url(/images/login/btn_login2.png) 0 0 repeat-x;" value="ログイン">
+						        </div>
+					        </form>
+					     </div>
+				    </div><!-- #login-box -->
+				 </div><!-- #login-body -->
+				 <div id="login-footer">
+					<div id="login-copy" class="login-bkmk-on">
+					    <span class="neo-copyright-year">Copyright (C)</span> TAS Viet Nam All Rights Reserved. 
+					</div><!-- #login-copy -->
+				    <div id="login-bm" class="login-bkmk-on">
+				        <div class="login-category solo">
+						    <div class="login-category-in" style="width: auto;">
+						    	<a href="/" target="link1">ホームページ</a>
+						    </div>
+						</div>
+				    </div><!-- #login-bm -->
+				</div><!-- #login-footer -->
+				<div style="background-image:url(/images/login/image_login.png);" id="login-picture">
+				</div>
+			</div><!-- #login-body-back -->
+		</div><!-- #dn-main -->
+	</div><!-- #dn-main-wrap -->
+</div><!--dn-body-->
+

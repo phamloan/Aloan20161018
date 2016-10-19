@@ -1,0 +1,1635 @@
+{{#section 'shead'}}
+    <!-- stuff that goes in head...example: -->
+  	<link type="text/css" rel="stylesheet" href="/stylesheets/safety.css">
+  	<link type="text/css" rel="stylesheet" href="/stylesheets/creport.css">
+	<link type="text/css" rel="stylesheet" href="/stylesheets/footerHistory.css">
+	<script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.dataTables.min.css">
+	<script src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css">
+	<script src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="http://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"></script>
+	<script src="http://kingkode.com/datatables.editor.lite/js/altEditor/dataTables.altEditor.free.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/javascripts/adminPage.js"></script>
+	<base target="_parent">
+{{/section}}
+<form action="/logout" method="post" name="logoutfrm" id="logoutfrm">
+</form>
+<div id="dn-header" style="background:#0157AD url(/images/com/dn-header_back.jpg) 0 100% repeat-x;">
+	<li id="dn-h-logo" style="color: white !important; font-size: 30px !important; padding-top: 5px !important;">給与明細システム</li>
+	<div id="dn-h-user">
+		<a id="dn-h-username" data-for="dn-h-usermenu" href="#" data-position="bottom" data-align="right" class="co-drop-down-button" onclick="openPopUp(event)" style="margin-right: 40px !important; outline: none !important;">{{empname}}</a>
+		<div class="co-pop-up-box" id="dn-h-usermenu" style="right: 30px !important; top: 40px;">
+			<ul>
+				<li class="dn-h-usermenu-item"><a href="/pwchange" id="jco-logout" title="パスワード変更" style="color: #fff !important;">パスワード変更</a></li>
+				<li class="dn-h-usermenu-item"><a href="javascript:void(0);" title="ログアウト" onclick="document.getElementById('logoutfrm').submit();" style="color: #fff !important;">ログアウト</a></li>
+			</ul>
+		</div>
+	</div><!-- #dn-h-user -->
+</div><!-- #dn-header -->
+<div id="dn-body" class="dn-main-menu co-menu-container" style="min-height: 1020px !important; padding-left: 0px !important; padding-top: 30px !important;">
+	<div id="dn-main-wrap" class="co-menu-main-pane">
+		<div id="dn-main" style="width: 1000px;">
+			<div class="co-m-header">
+				<h2 class="co-m-title"><span class="safety-m-title">管理画面</span></h2>
+			</div><!-- #co-m-header -->
+			<div class="co-m-content" style="width: 1000px;">
+				<div class="safety-tab">
+					<div class="safety-m-tabbar" style="background:#fff url(/images/com/co-tabbar_back.jpg) 0 0 repeat-x;">
+						<div class="safety-m-tb-menu co-width-100p">
+							<ul class="safety-m-tb-list co-width-100p">
+								<li class="safety-m-tb-item on class1" style="width: 150px;"><a class="co-width-100p" href="#" data-url="layout1">給与データ読込む</a></li>
+								<li class="safety-m-tb-item class2" style="width: 150px;"><a class="co-width-100p" href="#" data-url="layout2">ユーザ登録</a></li>
+								<li class="safety-m-tb-item class3" style="width: 150px;"><a class="co-width-100p" href="#" data-url="layout3">パスワード初期化</a></li>
+								<li class="safety-m-tb-item class4" style="width: 150px;"><a class="co-width-100p" href="#" data-url="layout4">運用中明細書設定</a></li>
+								<li class="safety-m-tb-item class5" style="width: 150px;"><a class="co-width-100p" href="#" data-url="layout5">明細書設定</a></li>
+								<li class="safety-m-tb-item class6" style="width: 150px;"><a class="co-width-100p" href="#" data-url="layout6">単位設定</a></li>
+							</ul>
+						</div><!-- .safety-m-tb-menu -->
+					</div><!-- .safety-m-tabbar -->
+					<div class="safety-tab-content safety-tab-list">
+						<div class="layout1" style="height: 600px !important;">
+							<div style="padding-top: 50px !important; padding-left: 150px !important;">
+								<table>
+									<tr>
+										<th style="padding-right: 10px !important;">データフォルダ :</th>
+										<td>
+											 <input type="file" id="browse" name="fileupload" style="display: none" onChange="Handlechange();" style="width: 400px;"/>
+											 <input type="text" id="filename" readonly="true" style="width: 400px;"/>
+											 <input type="button" value="選択" id="fakeBrowse" onclick="HandleBrowseClick();"/>
+										</td>
+									</tr>
+								</table>	
+							</div>
+							<div style="height: 400px !important; padding-top: 50px !important; padding-left: 50px !important;">
+								<table class="table_list" style="height: 400px !important;">
+									<tbody>
+										<div style="width: 800px !important; border-top: 1px dashed gray;">
+										</div>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="layout2" style="display: none; height: 600px !important;">
+							<div style="padding-top: 50px !important; padding-left: 150px !important;">
+								<div style="padding-left: 200px;">
+									<input type="radio" name="gender" id="male" value="male" checked>
+									<label for="male">一括登録</label>
+									<input type="radio" name="gender" id="female" value="female">
+									<label for="female">個別登録</label>
+								</div>
+							</div>
+							<div class="radio1">
+								<div style="padding-left: 150px !important;">
+									<table>
+										<tr style="padding-right: 10px !important;">
+											<th class="control-label" style="width:180px; padding-right: 10px !important; clear:left; text-align:right;  float:left;">CSVファイル :</th>
+											<td>
+												<input type="file" id="browse" name="fileupload" style="display: none" onChange="Handlechange();" style="width: 300px;"/>
+												<input type="text" id="filename" readonly="true" style="width: 300px;" style="padding-right: 10px !important;"/>
+												<input type="button" value="選択" id="fakeBrowse" onclick="HandleBrowseClick();" style="padding-left: 10px !important;"/><br>
+											</td>
+										</tr>
+										<tr style="padding-top: 10px !important;">
+											<th class="control-label" style="width:180px; padding-right: 10px !important; clear:left; text-align:right; float:left; padding-top: 10px !important;">初期PW :</th>
+											<td style="padding-top: 10px !important;">
+												<select style="width: 300px;">
+													<option value=000 selected>1111</option>
+													<option value=001>2222</option>
+													<option value=002>3333</option>
+												</select> 
+											</td>
+										</tr>
+									</table>
+								</div>
+								<div style="height: 400px !important; padding-top: 50px !important; padding-left: 50px !important;">
+									<table class="table_list" style="height: 400px !important;">
+										<tbody>
+											<div style="width: 800px !important; border-top: 1px dashed gray;">
+											</div>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="radio2">
+								<div style="padding-left: 150px !important;">
+									
+									<table>
+										<tr>
+											<th class="control-label" style="width:180px; padding-right: 10px !important; clear:left; text-align:right;  float:left;">社員名 :</th>
+											<td>
+												<input type="text" id="filename" readonly="true" style="width: 300px;"/><br>
+											</td>
+										</tr>
+										<tr>
+											<th class="control-label" style="width:180px; padding-right: 10px !important; clear:left; text-align:right; float:left; padding-top: 10px !important;">社員番号 :</th>
+											<td style="padding-top: 10px !important;">
+												<input type="text" style="width: 300px;"><br>
+											</td>
+										</tr>
+										<tr>
+											<th class="control-label" style="width:180px; padding-right: 10px !important; clear:left; text-align:right; float:left; padding-top: 10px !important;">所属：</th>
+											<td style="padding-top: 10px !important;">
+												<select style="width: 300px;">
+													<option value=000 selected>なし</option>
+													<option value=001>営業部</option>
+													<option value=002>開発部</option>
+												</select> 
+											</td>
+										</tr>
+										<tr>
+											<th class="control-label" style="width:180px; padding-right: 10px !important; clear:left; text-align:right; float:left; padding-top: 10px !important;">初期PW :</th>
+											<td style="padding-top: 10px !important;">
+												<select style="width: 300px;">
+													<option value=000 selected>1111</option>
+													<option value=001>2222</option>
+													<option value=002>3333</option>
+												</select> 
+											</td>
+										</tr>
+									</table>
+								</div>
+								<div style="height: 400px !important; padding-top: 50px !important; padding-left: 50px !important;">
+									<table class="table_list" style="height: 400px !important;">
+										<tbody>
+											<div style="width: 800px !important; border-top: 1px dashed gray;">
+											</div>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="layout3" style="display: none; height: 600px !important;">
+							<div style="padding-top: 50px !important; padding-left: 250px !important;">
+								
+								<table>
+									<tr>
+										<th style="padding-right: 10px !important;">社員番号 :</th>
+										<td>
+											<input type="text" style="width: 400px;"><br>
+										</td>
+									</tr>
+								</table>
+								
+							</div>
+							<div style="height: 400px !important; padding-top: 50px !important; padding-left: 50px !important;">
+								<table class="table_list" style="height: 400px !important;">
+									<tbody>
+										<div style="width: 800px !important; border-top: 1px dashed gray;">
+										</div>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div style="display: none;" class="layout4">
+							<div style="padding-top: 20px !important; padding-left: 250px !important; padding-bottom: 20px !important;">
+							
+								<table>
+									<tr>
+										<th class="control-label" style="width:180px; padding-right: 30px !important; clear:left; text-align:right;  float:left;">区分 :</th>
+										<td>
+											<select style="width: 100px;">
+												<option value=000 selected>すべて</option>
+												<option value=001>営業部</option>
+												<option value=002>開発部</option>
+											</select> 
+										</td>
+									</tr>
+									<tr>
+										<th class="control-label" style="width:180px; padding-right: 30px !important; clear:left; text-align:right; float:left; padding-top: 10px !important;">テンプレート :</th>
+										<td style="padding-top: 10px !important;">
+											<select style="width: 100px;">
+												<option value=000 selected>共通ー１</option>
+												<option value=001>共通ー２</option>
+												<option value=002>営業部ー１</option>
+											</select> 
+										</td>
+									</tr>
+									<tr style="padding-top: 10px !important;">
+										<th class="control-label" style="width:180px; padding-right: 30px !important; clear:left; text-align:right; float:left; padding-top: 10px !important;">運用年月 :</th>
+										<td style="padding-top: 10px !important;">
+											<input type="text" style="width: 100px;" value="DD/MM/YYYY">
+										</td>
+									</tr>
+								</table>
+								
+							</div>
+							<div style="border-top: 1px dashed gray;">
+								<div style="height: 670px; padding-left: 4px !important;"><!-- 右ペイン -->      
+									<div style="float: left !important; padding-top: 20px !important; padding-bottom: 10px !important;">
+									  
+										<table class="table1">
+											<tr>
+												<th rowspan="2" class="border1" style="width: 25px; background: gray; color: white; border: 1px solid black !important; text-align: center !important;">所属氏名</th>
+												<th class="border1" style="width: 100px; text-align: center !important; background-color:lightgrey;">所属</th>
+												<th class="border1" style="width: 100px; text-align: center !important; background-color:lightgrey;">社員番号</th>
+												<th class="border1" style="width: 100px; text-align: center !important; background-color:lightgrey;">区分</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">氏名</th>
+											</tr>
+											<tr class="border1">
+												<td class="border1" style="width: 100px; text-align: right;">9999</td>
+												<td class="border1" style="width: 100px; text-align: right;">999999</td>
+												<td class="border1" style="width: 100px; text-align: right;">ロロロロロロ</td>
+												<td class="border1" style="text-align: right;">ロロロロロロロロロロ</td>
+											</tr>
+										</table>
+										
+									</div>
+									<div style="float: right !important; padding-top: 50px !important;">
+										<span class="co-center" style="padding-right: 200px !important; font-size: 30px; text-align: center !important;">給与明細書</span> 	
+									</div>
+									<div style="padding-top: 20px !important;">
+										
+										<table class="table2">
+											<tr>
+												<th rowspan="4" class="border1" style="width: 25px; background: gray; color: white; border: 1px solid black !important; text-align: center !important;">勤怠他</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+											</tr>
+											<tr>
+												<td class="border1" style="text-align: right;">ロロロ</td>
+												<td class="border1" style="text-align: right;">ロロロ回</td>
+												<td class="border1" style="text-align: right;">ロロロ時</td>
+												<td class="border1" style="text-align: right;">ロロロ日</td>
+												<td class="border1" style="text-align: right;">ロロロ</td>
+												<td class="border1" style="text-align: right;">ロロロ</td>
+												<td class="border1" style="text-align: right;">ロロロ</td>
+												<td class="border1" style="text-align: right;">ロロロ</td>
+												<td class="border1" style="text-align: right;">ロロロ</td>
+												<td class="border1" style="text-align: right;">ロロロ日</td>
+											</tr>
+											<tr>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+											</tr>
+											<tr>
+												<td class="border1" style="text-align: right;">ロロロ</td>
+												<td class="border1" style="text-align: right;">ロロロ回</td>
+												<td class="border1" style="text-align: right;">ロロロ時</td>
+												<td class="border1" style="text-align: right;">ロロロ日</td>
+												<td class="border1" style="text-align: right;">ロロロ</td>
+												<td class="border1" style="text-align: right;">ロロロ</td>
+												<td class="border1" style="text-align: right;">ロロロ</td>
+												<td class="border1" style="text-align: right;">ロロロ</td>
+												<td class="border1" style="text-align: right;">ロロロ</td>
+												<td class="border1" style="text-align: right;">ロロロ日</td>
+											</tr>
+										</table>
+										
+									</div>
+									<div style="padding-top: 10px !important;">
+										
+										<table class="table3">
+											<tr>
+												<th rowspan="4" class="border1" style="width: 25px; background: gray; color: white; border: 1px solid black !important; text-align: center !important;">支給</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+											</tr>
+											<tr>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+											</tr>
+											<tr>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important;">ロロロロロロ</th>
+											</tr>
+											<tr>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+											</tr>
+										</table>
+										
+									</div>
+									<div style="padding-top: 10px !important;">
+										
+										<table class="table4">
+											<tr>
+												<th rowspan="4" class="border1" style="width: 25px; background: gray; color: white; border: 1px solid black !important; text-align: center !important;">控除</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+											</tr>
+											<tr>
+												<td class="border2">99, 999, 999円</td>
+												<td class="border2">99, 999, 999円</td>
+												<td class="border2">99, 999, 999円</td>
+												<td class="border2">99, 999, 999円</td>
+												<td class="border2">99, 999, 999円</td>
+												<td class="border2">99, 999, 999円</td>
+												<td class="border2">99, 999, 999円</td>
+												<td class="border2">99, 999, 999円</td>
+												<td class="border2">99, 999, 999円</td>
+												<td class="border2">99, 999, 999円</td>
+											</tr>
+											<tr>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">ロロロロロロ</th>
+											</tr>
+											<tr>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+											</tr>
+											<tr>
+												<th class="border4"></th>
+												<th class="border4"></th>
+												<th class="border4"></th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">総支給金額</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">控除合計額</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">差引支給額</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">銀行１振込額</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">銀行２振込額</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">現金支給額</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">翌月繰越題</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">前月繰越題</th>
+											</tr>
+											<tr>
+												<td class="border4"></td>
+												<td class="border4"></td>
+												<td class="border4"></td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+											</tr>
+										</table>	
+									</div> 
+								</div>
+							</div>
+						</div>
+						<div style="display: none;" class="layout5">
+							<div style="padding-top: 20px !important; padding-left: 150px !important;">
+								<div style="padding-left: 200px;">
+									<input type="radio" name="radiolayout5" id="rad1" value="rad1" checked>
+									<label for="rad1">新規作成</label>
+									<input type="radio" name="radiolayout5" id="rad2" value="rad2">
+									<label for="rad2">既存コピー</label>
+									<input type="radio" name="radiolayout5" id="rad3" value="rad3">
+									<label for="rad3">既存修正</label>
+								</div>
+							</div>
+							<div class="layout5radio1" style="padding-bottom: 10px !important;">
+								<div style="padding-left: 150px !important;">
+									<table>
+										<tr style="padding-right: 10px !important;">
+											<th class="control-label" style="width:180px; padding-right: 10px !important; clear:left; text-align:right;  float:left;">CSVファイル :</th>
+											<td>
+												<input type="file" id="browse" name="fileupload" style="display: none" onChange="Handlechange();" style="width: 300px;"/>
+												<input type="text" id="filename" readonly="true" style="width: 300px;" style="padding-right: 10px !important;"/>
+												<input type="button" value="選択" id="fakeBrowse" onclick="HandleBrowseClick();" style="padding-left: 10px !important;"/><br>
+											</td>
+										</tr>
+										<tr style="padding-top: 10px !important;">
+											<th class="control-label" style="width:180px; padding-right: 10px !important; clear:left; text-align:right; float:left; padding-top: 10px !important;">テンプレート名＊ :</th>
+											<td style="padding-top: 10px !important;">
+												<input type="text" style="width: 300px;">
+											</td>
+										</tr>
+									</table>
+								</div>
+								<div style="padding-left: 350px !important; padding-top: 10px;"">
+									<input type="button" value="読込む">
+								</div>
+							</div>
+							<div class="layout5radio2" style="padding-bottom: 10px !important;">
+								<div style="padding-left: 150px !important;">
+									<table>
+										<tr>
+											<th class="control-label" style="width:180px; padding-right: 10px !important; clear:left; text-align:right; float:left;">コピー元テンプレート：</th>
+											<td>
+												<select style="width: 300px;">
+													<option value=000 selected>共通ー１</option>
+													<option value=001>共通ー２</option>
+													<option value=002>営業部ー１</option>
+												</select> 
+											</td>
+										</tr>
+										<tr>
+											<th class="control-label" style="width:180px; padding-right: 10px !important; clear:left; text-align:right; float:left; padding-top: 10px !important;">テンプレート名＊ :</th>
+											<td style="padding-top: 10px !important;">
+												<input type="text" style="width: 300px;">
+											</td>
+										</tr>
+									</table>
+								</div>
+								<div style="padding-left: 350px !important; padding-top: 10px !important;">
+									<table>
+										<tr>
+											<td style="padding-right: 10px !important;">
+												<input type="button" value="読込む">
+											</td>
+											<td>
+												<input type="button" value="CSVダウンロード">
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="layout5radio3" style="padding-bottom: 10px !important;">
+								<div style="padding-left: 150px !important;">
+									<table>
+										<tr>
+											<th class="control-label" style="width:180px; padding-right: 10px !important; clear:left; text-align:right; float:left;">テンプレート：</th>
+											<td>
+												<select style="width: 300px;">
+													<option value=000 selected>共通ー１</option>
+													<option value=001>共通ー２</option>
+													<option value=002>営業部ー１</option>
+												</select> 
+											</td>
+										</tr>
+									</table>
+								</div>
+								<div style="padding-left: 350px !important; padding-top: 10px !important;">
+									<input type="button" value="読込む">
+								</div>
+							</div>
+							<div style="border-top: 1px dashed gray;">
+								<div style="height: 670px; padding-left: 4px !important;"><!-- 右ペイン -->      
+									<div style="float: left !important; padding-top: 20px !important; padding-bottom: 10px !important;">
+										<table class="table1">
+											<tr>
+												<th rowspan="2" class="border1" style="width: 25px; background: gray; color: white; border: 1px solid black !important; text-align: center !important;">所属氏名</th>
+												<th class="border1" style="width: 100px; text-align: center !important;">
+													<select>
+														<option value=000 selected>所属</option>
+														<option value=001>社員番号</option>
+														<option value=002>区分</option>
+														<option value=003>氏名</option>
+													</select> 
+												</th>
+												<th class="border1" style="width: 100px; text-align: center !important;">
+													<select>
+														<option value=000>所属</option>
+														<option value=001 selected>社員番号</option>
+														<option value=002>区分</option>
+														<option value=003>氏名</option>
+													</select> 
+												</th>
+												<th class="border1" style="width: 100px; text-align: center !important;">
+													<select>
+														<option value=000>所属</option>
+														<option value=001>社員番号</option>
+														<option value=002 selected>区分</option>
+														<option value=003>氏名</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000>所属</option>
+														<option value=001>社員番号</option>
+														<option value=002>区分</option>
+														<option value=003 selected>氏名</option>
+													</select> 
+												</th>
+											</tr>
+											<tr class="border1">
+												<td class="border1" style="width: 100px; text-align: right;">9999</td>
+												<td class="border1" style="width: 100px; text-align: right;">999999</td>
+												<td class="border1" style="width: 100px; text-align: right;">ロロロロロロ</td>
+												<td class="border1" style="text-align: right;">ロロロロロロロロロロ</td>
+											</tr>
+										</table>
+									</div>
+									<div style="float: right !important; padding-top: 20px !important;">
+										<span class="co-center" style="padding-right: 200px !important; font-size: 30px; text-align: center !important;">給与明細書</span> 	
+									</div>
+									<div style="padding-top: 20px !important;">
+										<table class="table2">
+											<tr>
+												<th rowspan="4" class="border1" style="width: 25px; background: gray; color: white; border: 1px solid black !important; text-align: center !important;">勤怠他</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+											</tr>
+											<tr>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+											</tr>
+											<tr>
+												<th class="border1">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+											</tr>
+											<tr>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+											   <td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+											</tr>
+										</table>
+									</div>
+									<div style="padding-top: 10px !important;">
+										<table class="table3">
+											<tr>
+												<th rowspan="4" class="border1" style="width: 25px; background: gray; color: white; border: 1px solid black !important; text-align: center !important;">支給</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+											</tr>
+											<tr>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+											   <td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+											   <td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+											</tr>
+											<tr>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+											</tr>
+											<tr>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+											   <td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+											</tr>
+										</table>
+									</div>
+									<div style="padding-top: 10px !important;">
+										<table class="table4">
+											<tr>
+												<th rowspan="4" class="border1" style="width: 25px; background: gray; color: white; border: 1px solid black !important; text-align: center !important;">控除</th>
+												<th class="border1"style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+											</tr>
+											<tr>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+											</tr>
+											<tr>
+												<th class="border1" style="text-align: center !important;"> 
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+												<th class="border1" style="text-align: center !important;">
+													<select>
+														<option value=000 selected>ロロロロロ</option>
+														<option value=001>aaaa</option>
+														<option value=002>bbbb</option>
+														<option value=003>ccccc</option>
+													</select> 
+												</th>
+											</tr>
+											<tr>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+											   <td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+												<td class="border1" style="text-align: right;">ロロロ
+													<select style="width: 40px !important;">
+														<option value=000>日</option>
+														<option value=001>円</option>
+														<option value=002 selected>回</option>
+														<option value=003>HH:MM</option>
+													</select> 
+												</td>
+											</tr>
+											<tr>
+												<th class="border4"></th>
+												<th class="border4"></th>
+												<th class="border4"></th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">総支給金額</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">控除合計額</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">差引支給額</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">銀行１振込額</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">銀行２振込額</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">現金支給額</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">翌月繰越題</th>
+												<th class="border1" style="text-align: center !important; background-color:lightgrey;">前月繰越題</th>
+											</tr>
+											<tr>
+												<td class="border4"></td>
+												<td class="border4"></td>
+												<td class="border4"></td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+												<td class="border1">99, 999, 999円</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div style="display: none; padding-top: 50px !important; min-height: 400px !important;  padding-left: 250px !important;" class="layout6">
+						<div style="width: 500px !important;">
+							<table cellpadding="0" cellspacing="0" border="0"  class="table table-striped table-bordered dataTable" id="example">
+							<thead>
+					            <tr>
+					                <th>表示</th>
+					                <th>区分</th>
+					                <th>単位</th>
+					            </tr>
+					        </thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="padding-top: 10px !important;">
+				<button style="width: 100px !important;" type="button" id="load" data-loading-text="<i class='fa fa-spinner fa-spin'></i>">実行</button>
+			</div>
+		</div><!-- #dn-main -->
+	</div><!-- #dn-main-wrap -->
+</div><!-- #dn-body -->
+<div id="login-footer">
+	<div id="login-copy" class="login-bkmk-on">
+	    <span class="neo-copyright-year">Copyright (C)</span> TAS Viet Nam All Rights Reserved. 
+	</div><!-- #login-copy -->
+    <div id="login-bm" class="login-bkmk-on">
+        <div class="login-category solo">
+		    <div class="login-category-in" style="width: auto;">
+		    	<a href="#" target="link1">会社ホームページ</a>
+		    </div>
+		</div>
+    </div><!-- #login-bm -->
+</div><!-- #login-footer -->

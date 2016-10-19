@@ -1,0 +1,98 @@
+{{#section 'shead'}}
+    <!-- stuff that goes in head...example: -->
+    <link type="text/css" rel="stylesheet" href="/stylesheets/info.css">
+   	<link type="text/css" rel="stylesheet" href="/stylesheets/footerHistory.css">
+   	<script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/javascripts/payHistory.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/javascripts/jquery-latest.js"></script> 
+	<script type="text/javascript" charset="utf-8" src="/javascripts/jquery.tablesorter.js"></script> 
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+{{/section}}
+<form action="/logout" method="post" name="logoutfrm" id="logoutfrm">
+</form>
+<div id="dn-header" style="background:#0157AD url(/images/com/dn-header_back.jpg) 0 100% repeat-x;">
+	<li id="dn-h-logo" style="color: white !important; font-size: 30px !important; padding-top: 5px !important;">給与明細システム</li>
+	<div id="dn-h-user">
+		<a id="dn-h-username" href="#" data-for="dn-h-usermenu" data-position="bottom" data-align="right" class="co-drop-down-button" onclick="openPopUp(event)" style="margin-right: 40px !important; outline: none !important;">{{empname}}</a>
+		<div class="co-pop-up-box" id="dn-h-usermenu" style="right: 30px !important; top: 40px;">
+			<ul>
+				<li class="dn-h-usermenu-item"><a href="/pwchange" id="jco-logout" title="パスワード変更" style="color: #fff !important;">パスワード変更</a></li>
+				<li class="dn-h-usermenu-item"><a href="javascript:void(0);" title="ログアウト" onclick="document.getElementById('logoutfrm').submit();" style="color: #fff !important;">ログアウト</a></li>
+			</ul>
+		</div>
+	</div><!-- #dn-h-user -->
+</div><!-- #dn-header -->
+<div id="dn-body" class="dn-main-menu co-menu-container" style="min-height: 888px; padding-left: 0px !important; padding-top: 20px !important;">
+	<div id="dn-main-wrap" class="co-menu-main-pane">
+    	<div id="dn-main" style="padding-top: 30px !important;">
+      		<div class="co-m-header">
+	    		<h2 class="co-m-title"><span class="creport-m-title">給与明細リスト</span></h2>
+      		</div><!-- #co-m-header -->      
+	  		<div class="co-m-content info-m-content">
+        		<div id="jco-m-list-container" class="jco-page" style="display: block;">
+          			<form action="#" method="post" name="listfrm" id="listfrm">
+           				<div class="co-actionwrap top jco-list-acactionwrap">
+           					<div class="co-page top jco-pager"><div class="co-page-text co-cnt">全<span class="sizeList"></span>件</div></div>
+          				<!-- ページリンク -->
+            			</div>
+            			<div class="co-listview co-list-selfolder selmulti ui-layout-container" style="min-height: 500px !important; overflow: hidden; position: relative;">
+              				<div class="ui-layout-center co-listview-list ui-layout-pane ui-layout-pane-center" style="position: absolute; margin: 0px; border-left: none; right: 0px; top: 0px; bottom: 0px; z-index: 0;">
+				                <div class="co-btnarea">
+				                  	<div class="co-fright">
+				                    	<a data-align="right" data-position="bottom" data-for="jco-list-sort-item" class="co-list-sort co-drop-down-button" href="#" onclick="openMenuHistory(event)">
+				                      		<span class="co-list-sort-link-ic" href="#" style="background-image:url(/images/com/co-ic_list_order.png);">&nbsp;</span>
+				                      		<span class="co-list-sort-link-da" href="#" style="background-image:url(/images/com/co-ic_list_order_pdwon.png);">&nbsp;</span>
+				                    	</a>
+				                    	<div class="co-list-sort-item co-pop-up-box" id="jco-list-sort-item" style="top: 26px; left: 835px;">
+				                    	</div>
+				                  	</div>
+				                  	<div>
+				                    	<div class="jinfo-list-sel">
+				                      		<span style="margin-left: 780px !important;">表示:</span></span>
+										</div>
+				                  	</div>
+				                </div>
+								<div class="co-listview-scroll">
+								 	<table class="co-table-list tablesorter" id="table_history">
+								  		<thead>
+								   			<tr>
+												<th class="date_time" title="対象年月" style="border:1px solid #ddd; width: 170px; border-left: none;">対象年月</th>
+												<th class="salary_classification" title="給与区分" style="width: 170px; border:1px solid #ddd; border-left: none;">給与区分</th>
+												<th class="total_payment_amount" title="総支給金額" style="width: 170px; border:1px solid #ddd; border-left: none;">総支給金額</th>
+												<th class="deduction_total_amount" title="控除合計額" style="width: 170px; border:1px solid #ddd; border-left: none;">控除合計額</th>
+												<th class="net_payments" title="差引支給額" style="width: 167px; border:1px solid #ddd; border-left: none; border-right: none;">差引支給額</th>
+								   			</tr>
+								  		</thead>
+				                    	<tbody>
+				                    		{{#kyumei}} 
+											<tr>
+												<td class="doc-th-ymdhi-his" style="border:1px solid #ddd; width: 170px; border-top-width: 0; border-left: none;"><a href="/payDetail/{{payid}}">{{payperiod}}</a></td>
+												<td class="salary_classification" style="width: 170px; border:1px solid #ddd; border-top-width: 0; border-left: none;">{{paydata.0.data.2.value}}</td>
+												<td class="total_payment_amount" style="width: 170px; border:1px solid #ddd; border-top-width: 0; border-left: none;">{{paydata.4.data.0.value}}</td>
+												<td class="deduction_total_amount" style="width: 170px; border:1px solid #ddd; border-top-width: 0; border-left: none;"><span>{{paydata.4.data.1.value}}</span></td>
+												<td class="net_payments" style="width: 167px; border:1px solid #ddd; border-top-width: 0; border-left: none; border-right: none;">{{paydata.4.data.2.value}}</td>
+											</tr>
+											{{/kyumei}}
+										</tbody>
+									</table>
+								</div> 
+				        	</div>
+				    	</div>
+					</form>
+				</div>
+			</div>      
+		</div><!-- #dn-main -->
+	</div><!-- #dn-main-wrap -->
+</div><!-- #dn-body -->
+<div id="login-footer">
+	<div id="login-copy" class="login-bkmk-on">
+	    <span class="neo-copyright-year">Copyright (C)</span> TAS Viet Nam All Rights Reserved. 
+	</div><!-- #login-copy -->
+    <div id="login-bm" class="login-bkmk-on">
+        <div class="login-category solo">
+		    <div class="login-category-in" style="width: auto;">
+		    	<a href="#" target="link1">会社ホームページ</a>
+		    </div>
+		</div>
+    </div><!-- #login-bm -->
+</div><!-- #login-footer -->
