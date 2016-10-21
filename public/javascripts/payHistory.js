@@ -43,6 +43,7 @@ $( document ).ready(function() {
    	var div = document.getElementById('jco-list-sort-item');
 
 	var mayValue = JSON.parse("[" + result + "]");
+	mayValue.reverse();
 
 	// create ul
     var ul = document.createElement('ul');

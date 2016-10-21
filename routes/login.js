@@ -47,7 +47,7 @@ module.exports = function(app, passport) {
 	});
 
 	// =====================================
-	// payHistory ==========================
+	// changePassword ==========================
 	// =====================================
 	// show 
 	app.get('/pwchange', function(req, res, next) {
@@ -230,3 +230,4 @@ function isLoggedIn(req, res, next) {
 	// if they aren't redirect them to the home page
 	res.redirect('/');
 }
+

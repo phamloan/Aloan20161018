@@ -122,9 +122,6 @@ button,[type=button],[type=reset],[type=submit] {
 button:hover,[type=button]:hover,[type=reset]:hover,[type=submit]:hover {
 	border-color:#bbb;
 }
-html:not(.co-browser-IE) button:active,html:not(.co-browser-IE) [type=button]:active,html:not(.co-browser-IE) [type=reset]:active,html:not(.co-browser-IE) [type=submit]:active {
-	padding:1px 14px 0 16px;
-}
 button[disabled],[type=button][disabled],[type=reset][disabled],[type=submit][disabled] {
 	cursor:default;
 }
@@ -1542,7 +1539,6 @@ a.co-m-h-setting-list-label:hover {
 }
 .co-ebtnarea>.button {
 	margin:0;
-	padding:0 15px 0 35px;
 	min-height:30px;
 	height:2.308em;
 	line-height:2.308em;
@@ -2680,10 +2676,6 @@ input.ui-invalid,textarea.ui-invalid {
 	font-weight:normal;
 	opacity:1;
 	filter:none;
-}
-html:not(.co-browser-IE) .ui-datepicker .ui-datepicker-buttonpane button:active {
-	padding-left:.6em;
-	padding-right:.6em;
 }
 .co-multiple-sel-text {
 	padding-left:13px;
@@ -10360,13 +10352,21 @@ table.tablesorter thead tr .headerSortDown {
 .back_ground_menu_pop_up
 {
     background-color: #2d9ac9;
+}
+#prevBtn_1 {
+	background-image: url(/images/com/button_prev_dis.png);
+	background-repeat: no-repeat;
 } 
 #prevBtn {
-	background-image: url(/images/com/co-btn_prev.gif);
+	background-image: url(/images/com/button_prev.png);
+	background-repeat: no-repeat;
+}
+#nextBtn_1 {
+	background-image: url(/images/com/button_next_dis.png);
 	background-repeat: no-repeat;
 }
 #nextBtn {
-	background: url(/images/com/co-btn_next.gif);
+	background-image: url(/images/com/button_next.png);
 	background-repeat: no-repeat;
 }
 

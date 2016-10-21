@@ -16,41 +16,54 @@ $(document).on("click", "#printThis", function (e) {
 
 });
 
-var form = $('#creport-view-comment'),
- 	cache_width = form.width(),
- 	a4  =[ 595.28,  841.89];  // for a4 size paper width and height
-
-$(document).on("click", "#pdfThis", function (e) {
-	alert('1');
+$(document).on("click", "#pdfThis", function () {
+	var form = $('#creport-view'),
+    cache_width = form.width(),
+    a4  =[ 595.28,  841.89];  // for a4 size paper width and height
     $('body').scrollTop(0);
- 	createPDF();
+ 	createPDF(form, a4, cache_width);
 });
 
-/*$('#pdfThis').on('click',function(){
-	alert('AAAAA');
- 	$('body').scrollTop(0);
- 	createPDF();
-});*/
+function createPDF(form, a4, cache_width){
+ 	getCanvas(form, a4).then(function(canvas){
+        var imgData = canvas.toDataURL('image/png');
 
-//create pdf
-function createPDF(){
-	alert(form);
- 	getCanvas().then(function(canvas){
-  		var img = canvas.toDataURL("image/png"),
-  		doc = new jsPDF({
-        	unit:'px', 
-          	format:'a4'
-    	});     
-    	doc.addImage(img, 'JPEG', 20, 20);
-    	doc.output("dataurlnewwindow");
+  		var imgWidth = 295; 
+
+        var pageHeight = 210;  
+
+        var imgHeight = canvas.height * imgWidth / canvas.width;
+
+        var heightLeft = imgHeight;
+
+        var pdf = new jsPDF('l', 'mm');
+
+        var position = 0;
+
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+
+        heightLeft -= pageHeight;
+
+        while (heightLeft >= 0) {
+
+            position = heightLeft - imgHeight;
+
+            pdf.addPage();
+
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+
+            heightLeft -= pageHeight;
+
+        }
+        pdf.save("payDetail.pdf");
+    	pdf.output("dataurlnewwindow");
     	form.width(cache_width);
 	});
 }
  
 // create canvas object
-function getCanvas(){
-	alert('3');
-	form.width((a4[0]*1.33333) -80).css('max-width','none');
+function getCanvas(form, a4){
+	form.width(a4[0]*1.33333).css('width','1000px');
  	return html2canvas(form,{
 	    imageTimeout:2000,
     	removeContainer:true

@@ -10,6 +10,10 @@
 {{/section}}
 <form action="/logout" method="post" name="logoutfrm" id="logoutfrm">
 </form>
+<form action="/showPrevPage/{{paydetail.payid}}" method="post" name="showPrevPage" id="showPrevPage">
+</form>
+<form action="/showNextPage/{{paydetail.payid}}" method="post" name="showNextPage" id="showNextPage">
+</form>
 <div id="dn-header" style="background:#0157AD url(/images/com/dn-header_back.jpg) 0 100% repeat-x;">
 	<li id="dn-h-logo" style="color: white !important; font-size: 30px !important; padding-top: 5px !important;">給与明細システム</li>
 	<div id="dn-h-user">
@@ -34,33 +38,46 @@
 						<div class="co-actionwrap top">       
 							<div class="co-actionarea">  
 								<a href="/payHistory" title="戻る" class="co-pageback co-abtn jco-input-list-page" style="background: url(/images/com/co-ic_back.png) 50% 50% no-repeat"><span>戻る</span></a>	                    
+							</div>  
+							<div style="position:relative; left:44%;">
+								{{#if firstPay}}
+									<input id="prevBtn_1" type="button" name="button_last" style="width: 19px !important;" disabled>
+								{{else}}
+									<input id="prevBtn" type="button" name="button_last" style="width: 19px !important;" onclick="document.getElementById('showPrevPage').submit();">
+								{{/if}}
+
+								{{#if lastPay}}
+									<input id="nextBtn_1" type="button" name="button_next" style="width: 19px;" disabled>
+								{{else}}
+									<input id="nextBtn" type="button" name="button_next" style="width: 19px;" onclick="document.getElementById('showNextPage').submit();">
+								{{/if}}
 							</div>    
-						</div>   
+						</div> 
 						<div class="jco-disp-disparea"> 
-							<div style="min-height: 700px; overflow: hidden; position: relative;" class="co-listview co-list-selfolder selmulti ui-layout-container"> 
-								<div style="min-height: 700px; width: 1000px !important; position: absolute; margin: 0px; left: none; right: 0px; top: 0px; bottom: 0px; z-index: 0; display: block; visibility: visible;" class="co-listview-list ui-layout-center ui-layout-pane ui-layout-pane-center ui-layout-pane-hover ui-layout-pane-center-hover ui-layout-pane-open-hover ui-layout-pane-center-open-hover"><!-- 右ペイン --><div class="co-listview-edit">      
+							<div style="min-height: 680px; overflow: hidden; position: relative;" class="co-listview co-list-selfolder selmulti ui-layout-container"> 
+								<div style="min-height: 680px; width: 1000px; position: absolute; margin: 0px; left: none; right: 0px; top: 0px; bottom: 0px; z-index: 0; display: block; visibility: visible;" class="co-listview-list ui-layout-center ui-layout-pane ui-layout-pane-center ui-layout-pane-hover ui-layout-pane-center-hover ui-layout-pane-open-hover ui-layout-pane-center-open-hover"><!-- 右ペイン --><div class="co-listview-edit">      
 									<div class="co-vbtnarea">       
 										<div class="co-fright">                                                       
 											<a class="co-select-menu creport-msg-printer" id="pdfThis" style="background:url(/images/com/co-ic_cabinet.png) 0 50% no-repeat;">PDFダウンロード</a>       
 											<a id="printThis" class="co-select-menu creport-msg-printer" data-for="jcreport-print-menu" data-position="bottom" data-align="right" style="background:url(/images/com/co-ic_printer.png) no-repeat 0 50%;">印刷<span class="creport-view-print-arrow">&nbsp;</span></a>                 
 										</div>        
 									</div>         
-									<div id="creport-view">  
+									<div id="creport-view" style="width: 1000px !important;">  
 										<div id="creport-view-comment" class="creport-user-comments-area creport-user-comments-otherto">   
 											<div style="float: left !important; padding-top: 20px !important; padding-bottom: 10px !important;">						  
 												<table class="table1">
 													<tr>
 														<th rowspan="2" class="border1" style="width: 25px; background: gray; color: white; border: 1px solid black !important; text-align: center !important;">{{paydetail.paydata.0.groupname}}</th>
-														<th class="border1" style="width: 93px; text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.0.data.0.item}}</th>
-														<th class="border1" style="width: 93px; text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.0.data.1.item}}</th>
-														<th class="border1" style="width: 93px; text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.0.data.2.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.0.data.3.item}}</th>
+														<th class="border1" style="width: 93px; text-align: center !important; background-color:lightgrey; border-left: none;">{{paydetail.paydata.0.data.0.item}}</th>
+														<th class="border1" style="width: 93px; text-align: center !important; background-color:lightgrey; border-left: none;">{{paydetail.paydata.0.data.1.item}}</th>
+														<th class="border1" style="width: 93px; text-align: center !important; background-color:lightgrey; border-left: none;">{{paydetail.paydata.0.data.2.item}}</th>
+														<th class="border1" style="text-align: center !important; background-color:lightgrey; border-left: none;">{{paydetail.paydata.0.data.3.item}}</th>
 													</tr>
 													<tr>
-														<td class="border1" style="width: 93px; text-align: right;">{{paydetail.paydata.0.data.0.value}}</td>
-														<td class="border1" style="width: 93px; text-align: right;">{{paydetail.paydata.0.data.1.value}}</td>
-														<td class="border1" style="width: 93px; text-align: right;">{{paydetail.paydata.0.data.2.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.0.data.3.value}}</td>
+														<td class="border1" style="width: 93px; text-align: center; border-top: none; border-left: none;">{{paydetail.paydata.0.data.0.value}}</td>
+														<td class="border1" style="width: 93px; text-align: center; border-top: none; border-left: none;">{{paydetail.paydata.0.data.1.value}}</td>
+														<td class="border1" style="width: 93px; text-align: center; border-top: none; border-left: none;">{{paydetail.paydata.0.data.2.value}}</td>
+														<td class="border1" style="text-align: center; border-top: none; border-left: none;">{{paydetail.paydata.0.data.3.value}}</td>
 													</tr>
 												</table>
 											</div>
@@ -72,52 +89,52 @@
 												<table class="table2">
 													<tr>
 														<th rowspan="4" class="border1" style="width: 25px; background: gray; color: white; border: 1px solid black !important; text-align: center !important;">{{paydetail.paydata.1.groupname}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.0.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.1.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.2.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.3.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.4.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.5.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.6.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.7.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.8.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.9.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.1.data.0.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.1.data.1.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.1.data.2.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.1.data.3.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.1.data.4.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.1.data.5.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.1.data.6.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.1.data.7.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.1.data.8.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.1.data.9.item}}</th>
 													</tr>
 													<tr>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.0.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.1.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.2.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.3.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.4.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.5.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.6.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.7.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.8.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.9.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.0.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.1.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.2.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.3.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.4.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.5.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.6.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.7.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.8.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.9.value}}</td>
 													</tr>
 													<tr>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.10.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.11.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.12.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.13.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.14.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.15.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.16.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.17.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.18.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.1.data.19.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.1.data.10.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.1.data.11.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.1.data.12.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.1.data.13.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.1.data.14.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.1.data.15.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.1.data.16.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.1.data.17.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.1.data.18.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.1.data.19.item}}</th>
 													</tr>
 													<tr>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.10.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.11.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.12.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.13.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.14.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.15.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.16.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.17.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.18.value}}</td>
-														<td class="border1" style="text-align: right;">{{paydetail.paydata.1.data.19.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.10.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.11.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.12.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.13.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.14.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.15.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.16.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.17.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.18.value}}</td>
+														<td class="border1" style="text-align: right; border-top: none; border-left: none;">{{paydetail.paydata.1.data.19.value}}</td>
 													</tr>
 												</table>
 											</div>
@@ -126,52 +143,52 @@
 												<table class="table3">
 													<tr>
 														<th rowspan="4" class="border1" style="width: 25px; background: gray; color: white; border: 1px solid black !important; text-align: center !important;">{{paydetail.paydata.2.groupname}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.0.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.1.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.2.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.3.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.4.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.5.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.6.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.7.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.8.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.9.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.2.data.0.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.2.data.1.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.2.data.2.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.2.data.3.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.2.data.4.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.2.data.5.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.2.data.6.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.2.data.7.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.2.data.8.item}}</th>
+														<th class="border1" style="text-align: center !important; border-left: none;">{{paydetail.paydata.2.data.9.item}}</th>
 													</tr>
 													<tr>
-														<td class="border1">{{paydetail.paydata.2.data.0.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.1.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.2.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.3.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.4.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.5.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.6.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.7.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.8.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.9.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.0.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.1.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.2.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.3.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.4.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.5.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.6.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.7.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.8.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.9.value}}</td>
 													</tr>
 													<tr>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.10.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.11.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.12.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.13.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.14.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.15.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.16.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.17.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.18.item}}</th>
-														<th class="border1" style="text-align: center !important;">{{paydetail.paydata.2.data.19.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.2.data.10.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.2.data.11.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.2.data.12.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.2.data.13.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.2.data.14.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.2.data.15.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.2.data.16.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.2.data.17.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.2.data.18.item}}</th>
+														<th class="border1" style="text-align: center !important; border-top: none; border-left: none;">{{paydetail.paydata.2.data.19.item}}</th>
 													</tr>
 													<tr>
-														<td class="border1">{{paydetail.paydata.2.data.10.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.11.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.12.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.13.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.14.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.15.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.16.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.17.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.18.value}}</td>
-														<td class="border1">{{paydetail.paydata.2.data.19.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.10.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.11.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.12.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.13.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.14.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.15.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.16.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.17.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.18.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.2.data.19.value}}</td>
 													</tr>
 												</table>
 												
@@ -181,78 +198,78 @@
 												<table class="table4">
 													<tr>
 														<th rowspan="4" class="border1" style="width: 25px !important; background: gray; color: white; border: 1px solid black !important; text-align: center !important;">{{paydetail.paydata.3.groupname}}</th>
-														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey;">{{paydetail.paydata.3.data.0.item}}</th>
-														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey;">{{paydetail.paydata.3.data.1.item}}</th>
-														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey;">{{paydetail.paydata.3.data.2.item}}</th>
-														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey;">{{paydetail.paydata.3.data.3.item}}</th>
-														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey;">{{paydetail.paydata.3.data.4.item}}</th>
-														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey;">{{paydetail.paydata.3.data.5.item}}</th>
-														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey;">{{paydetail.paydata.3.data.6.item}}</th>
-														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey;">{{paydetail.paydata.3.data.7.item}}</th>
-														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey;">{{paydetail.paydata.3.data.8.item}}</th>
-														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey;">{{paydetail.paydata.3.data.9.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.0.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.1.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.2.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.3.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.4.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.5.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.6.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.7.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.8.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.9.item}}</th>
 													</tr>
 													<tr>
-														<td class="border2">{{paydetail.paydata.3.data.0.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.1.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.2.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.3.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.4.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.5.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.6.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.7.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.8.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.9.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.0.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.1.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.2.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.3.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.4.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.5.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.6.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.7.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.8.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.9.value}}</td>
 													</tr>
 													<tr>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.3.data.10.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.3.data.11.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.3.data.12.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.3.data.13.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.3.data.14.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.3.data.15.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.3.data.16.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.3.data.17.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.3.data.18.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.3.data.19.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.10.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.11.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.12.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.13.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.14.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.15.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.16.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.17.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.18.item}}</th>
+														<th class="border1" style="text-align: center !important; width: 95px; background-color:lightgrey; border-left: none;">{{paydetail.paydata.3.data.19.item}}</th>
 													</tr>
 													<tr>
-														<td class="border1">{{paydetail.paydata.3.data.10.value}}</td>
-														<td class="border1">{{paydetail.paydata.3.data.11.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.12.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.13.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.14.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.15.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.16.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.17.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.18.value}}</td>
-														<td class="border2">{{paydetail.paydata.3.data.19.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.10.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.11.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.12.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.13.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.14.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.15.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.16.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.17.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.18.value}}</td>
+														<td class="border2" style="border-top: none; border-left: none;">{{paydetail.paydata.3.data.19.value}}</td>
 													</tr>
 													<tr>
 														<th class="border4"></th>
 														<th class="border4"></th>
 														<th class="border4"></th>
 														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.4.data.0.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.4.data.1.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.4.data.2.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.4.data.3.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.4.data.4.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.4.data.5.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.4.data.6.item}}</th>
-														<th class="border1" style="text-align: center !important; background-color:lightgrey;">{{paydetail.paydata.4.data.7.item}}</th>
+														<th class="border1" style="text-align: center !important; background-color:lightgrey; border-left: none;">{{paydetail.paydata.4.data.1.item}}</th>
+														<th class="border1" style="text-align: center !important; background-color:lightgrey; border-left: none;">{{paydetail.paydata.4.data.2.item}}</th>
+														<th class="border1" style="text-align: center !important; background-color:lightgrey; border-left: none;">{{paydetail.paydata.4.data.3.item}}</th>
+														<th class="border1" style="text-align: center !important; background-color:lightgrey; border-left: none;">{{paydetail.paydata.4.data.4.item}}</th>
+														<th class="border1" style="text-align: center !important; background-color:lightgrey; border-left: none;">{{paydetail.paydata.4.data.5.item}}</th>
+														<th class="border1" style="text-align: center !important; background-color:lightgrey; border-left: none;">{{paydetail.paydata.4.data.6.item}}</th>
+														<th class="border1" style="text-align: center !important; background-color:lightgrey; border-left: none;">{{paydetail.paydata.4.data.7.item}}</th>
 													</tr>
 													<tr>
 														<td class="border4"></td>
 														<td class="border4"></td>
 														<td class="border4"></td>
-														<td class="border1">{{paydetail.paydata.4.data.0.value}}</td>
-														<td class="border1">{{paydetail.paydata.4.data.1.value}}</td>
-														<td class="border1">{{paydetail.paydata.4.data.2.value}}</td>
-														<td class="border1">{{paydetail.paydata.4.data.3.value}}</td>
-														<td class="border1">{{paydetail.paydata.4.data.4.value}}</td>
-														<td class="border1">{{paydetail.paydata.4.data.5.value}}</td>
-														<td class="border1">{{paydetail.paydata.4.data.6.value}}</td>
-														<td class="border1">{{paydetail.paydata.4.data.7.value}}</td>
+														<td class="border1" style="border-top: none;">{{paydetail.paydata.4.data.0.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.4.data.1.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.4.data.2.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.4.data.3.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.4.data.4.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.4.data.5.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.4.data.6.value}}</td>
+														<td class="border1" style="border-top: none; border-left: none;">{{paydetail.paydata.4.data.7.value}}</td>
 													</tr>
 												</table>
 											</div>
@@ -265,23 +282,6 @@
 				</div>	
 			</div>
 		</div><!-- #dn-main -->
-		<div style="position:relative; left:45.5%; padding-top: 20px;">
-			<form action="/showPrevPage/{{paydetail.payid}}" method="post" name="showPrevPage" id="showPrevPage">
-			</form>
-			<form action="/showNextPage/{{paydetail.payid}}" method="post" name="showNextPage" id="showNextPage">
-			</form>
-			{{#if firstPay}}
-				<input id="prevBtn" type="button" name="button_last" style="width: 19px;" disabled>
-			{{else}}
-				<input id="prevBtn" type="button" name="button_last" style="width: 19px;" onclick="document.getElementById('showPrevPage').submit();">
-			{{/if}}
-
-			{{#if lastPay}}
-				<input id="nextBtn" type="button" name="button_next" style="width: 19px;" disabled>
-			{{else}}
-				<input id="nextBtn" type="button" name="button_next" style="width: 19px;" onclick="document.getElementById('showNextPage').submit();">
-			{{/if}}
-		</div>
 	</div><!-- #dn-main-wrap -->
 </div><!-- #dn-body -->
 <div id="login-footer">
