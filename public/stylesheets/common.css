@@ -819,10 +819,10 @@ body#dn-simple-main {
 #dn-body {
 	position:relative;
 	height:100%;
-	background:#f1f1f1;
+	background:#fff;
 }
 #dn-main-wrap {
-	min-height:560px;
+	min-height:450px;
 }
 #dn-main-wrap:after {
 	content:'';
