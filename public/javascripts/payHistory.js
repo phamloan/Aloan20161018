@@ -33,7 +33,11 @@ $( document ).ready(function() {
 		value = value.substring(0, value.length - 1);
 	}
 	var array = JSON.parse("[" + value + "]");
-	var newArr = $.unique(array.sort()).sort();
+
+	var newArr = [];
+	$.each(array, function(i, el){
+	    if($.inArray(el, newArr) === -1) newArr.push(el);
+	});
     var result = "";
     for (var i = 0; i < newArr.length; i++) {
       result += newArr[i] + ",";
@@ -43,8 +47,6 @@ $( document ).ready(function() {
    	var div = document.getElementById('jco-list-sort-item');
 
 	var mayValue = JSON.parse("[" + result + "]");
-	mayValue.reverse();
-
 	// create ul
     var ul = document.createElement('ul');
     var a_all = document.createElement('a');

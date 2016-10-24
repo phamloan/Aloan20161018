@@ -55,7 +55,7 @@ function createPDF(form, a4, cache_width){
             heightLeft -= pageHeight;
 
         }
-        pdf.save("payDetail.pdf");
+        pdf.save("給与明細.pdf");
     	pdf.output("dataurlnewwindow");
     	form.width(cache_width);
 	});

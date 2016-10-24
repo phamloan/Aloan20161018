@@ -35,9 +35,9 @@
            					<div class="co-page top jco-pager"><div class="co-page-text co-cnt">全<span class="sizeList"></span>件</div></div>
           				<!-- ページリンク -->
             			</div>
-            			<div class="co-listview co-list-selfolder selmulti ui-layout-container" style="min-height: 450px; position: relative;">
-              				<div class="ui-layout-center co-listview-list ui-layout-pane ui-layout-pane-center" style="position: absolute; margin: 0px; border-left: none; right: 0px; top: 0px; bottom: 0px; z-index: 0;">
-				                <div class="co-btnarea">
+            			<div class="co-listview co-list-selfolder selmulti ui-layout-container" style="border-left: none; max-height: 460px; position: relative;">
+              				<div class="detail" style="overflow-x: hidden; max-height: 460px; margin: 0px; border-left: none; right: 0px; top: 0px; bottom: 0px; z-index: 0;">
+				                <div class="co-btnarea" style="border-right: none; border-top: none;">
 				                  	<div class="co-fright">
 				                    	<a data-align="right" data-position="bottom" data-for="jco-list-sort-item" class="co-list-sort co-drop-down-button" href="#" onclick="openMenuHistory(event)">
 				                      		<span class="co-list-sort-link-ic" href="#" style="background-image:url(/images/com/co-ic_list_order.png);">&nbsp;</span>
@@ -52,7 +52,7 @@
 										</div>
 				                  	</div>
 				                </div>
-								<div class="co-listview-scroll">
+								<div>
 								 	<table class="co-table-list tablesorter" id="table_history">
 								  		<thead>
 								   			<tr>
@@ -63,7 +63,7 @@
 												<th class="net_payments" title="差引支給額" style="width: 167px; border:1px solid #ddd; border-left: none; border-right: none;">差引支給額</th>
 								   			</tr>
 								  		</thead>
-				                    	<tbody>
+				                    	<tbody class="co-listview-scroll">
 				                    		{{#kyumei}} 
 											<tr>
 												<td class="doc-th-ymdhi-his" style="border:1px solid #ddd; width: 170px; border-top-width: 0; border-left: none;"><a href="/payDetail/{{payid}}">{{payperiod}}</a></td>

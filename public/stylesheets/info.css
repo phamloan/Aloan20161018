@@ -3,3 +3,10 @@ body#dn-simple-main {
 	height:93%;
 	overflow:visible;
 }
+table#table_history tbody,
+table#table_history thead { display: block; }
+
+table#table_history tbody {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
